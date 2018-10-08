@@ -2,14 +2,15 @@
 
 using namespace std;
 
-const int TB = 101;
+const int TB = 1000;
 typedef int bignum[TB+1];
+bignum entrada;
 
 void Convpnbn(int a, bignum B){
 	if(a < 0){ B[0]=-1;  a=-a; }
 	else B[0]=1;
 	for(int i=TB; i>=1; i--){
-		B[i]=a%10; a /= 10;	
+		B[i]=a%10; a /= 10;
 	}
 }
 
@@ -34,19 +35,34 @@ void Multpnbn(int n, bignum B1, bignum B2){//B2 = n*B1
 }
 
 void Imprimebn(bignum B){
-	int i,k=1;	
+	int i,k=1;
 	if(B[0]==-1) cout<<"-";
 	while( (k < TB) && (!B[k])) k++;
 	for(i=k; i<=TB; i++) cout<<B[i];  cout<<endl;
 }
 
-void des(int n){
-	
-}
-
 int main(){
-	int n;
-	while(cin >> n){
-		cout << des(n) << endl;
+	int n, i;
+	bignum aux1, aux2, soma, saida;
+	while(cin >> n && n>= 0){
+        if(n == 1){
+            cout << 0 << endl;
+        }
+        else if(n == 2){
+            cout << 1 << endl;
+        }
+        else{
+            //Convpnbn(0, soma);
+            //Convpnbn(0, saida);
+            Convpnbn(0, aux1);
+            Convpnbn(1, aux2);
+            for(i=3;i<=n;i++){
+                Somabn(aux1, aux2, soma);
+                Multpnbn(i-1,soma,saida);
+                Multpnbn(1, aux2, aux1);
+                Multpnbn(1, saida, aux2);
+            }
+            Imprimebn(saida);
+        }
 	}
 }
